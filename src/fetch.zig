@@ -20,7 +20,7 @@ const status = zstatus.Notifier(CliStatus, 2, true, &[_]zstatus.ColorMap(CliStat
 pub const Fetcher = struct {
     pool: Pool,
 
-    pub fn new(n_jobs: usize, allocator: Allocator) Fetcher {
+    pub fn new(n_jobs: usize, allocator: Allocator) !Fetcher {
         var self = Fetcher{ .pool = undefined };
         try self.pool.init(.{ .allocator = allocator, .n_jobs = n_jobs });
         return self;
