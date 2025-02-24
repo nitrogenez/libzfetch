@@ -1,0 +1,17 @@
+.{
+    .name = "libzfetch",
+    .version = "0.1.0",
+
+    .dependencies = .{
+        .zstatus = .{
+            .url = "git+https://github.com/nitrogenez/cute-cli-status.git#2ab7b0edc5f27cd61428bd9b51acd0407c740024",
+            .hash = "122086be73b98c8ed180bb23dec31c41036e7e3b706202d0b6799a5b9555889f7533",
+        },
+    },
+
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+    },
+}
