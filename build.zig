@@ -6,7 +6,7 @@ pub fn build(b: *std.Build) void {
 
     const zstatus = b.dependency("zstatus", .{});
 
-    const lib_mod = b.createModule(.{
+    const lib_mod = b.addModule("libzfetch", .{
         .root_source_file = b.path("src/root.zig"),
         .target = target,
         .optimize = optimize,
