@@ -21,7 +21,7 @@ pub const Fetcher = struct {
     pool: Pool,
 
     pub fn new(n_jobs: usize, allocator: Allocator) Fetcher {
-        var self = Fetcher{ .pool = Pool{ .allocator = allocator } };
+        var self = Fetcher{ .pool = undefined };
         try self.pool.init(.{ .allocator = allocator, .n_jobs = n_jobs });
         return self;
     }
@@ -30,10 +30,10 @@ pub const Fetcher = struct {
         self.pool.deinit();
     }
 
-    pub fn add(self: *Fetcher, url: []const u8, out_stream: anytype) !void {
+    pub fn add(self: *Fetcher, allocator: Allocator, url: []const u8, out_stream: anytype) !void {
         try self.pool.spawn(struct {
             fn func() void {
-                fetch(self.pool.allocator, url, out_stream) catch |err|
+                fetch(allocator, url, out_stream) catch |err|
                     status.notify(.failed, "{!}", .{err});
             }
         }.func, .{});
