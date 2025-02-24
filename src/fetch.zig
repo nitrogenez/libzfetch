@@ -32,11 +32,11 @@ pub const Fetcher = struct {
 
     pub fn add(self: *Fetcher, allocator: Allocator, url: []const u8, out_stream: anytype) !void {
         try self.pool.spawn(struct {
-            fn func(alloc: Allocator) void {
-                fetch(alloc, url, out_stream) catch |err|
+            fn func(alloc: Allocator, url_inner: []const u8, out_stream_inner: anytype) void {
+                fetch(alloc, url_inner, out_stream_inner) catch |err|
                     status.notify(.failed, "{!}", .{err});
             }
-        }.func, .{allocator});
+        }.func, .{ allocator, url, out_stream });
     }
 };
 
